@@ -713,7 +713,7 @@ void rrc::release_pucch_srs()
 void rrc::ra_problem()
 {
   if (not t300.is_running() and not t301.is_running() and not t304.is_running() and not t311.is_running()) {
-    logger.warning("MAC indicated RA problem. Starting RLF");
+    srsran::console(" rrc l716 MAC indicated RA problem. Starting RLF");
     radio_link_failure_push_cmd();
   } else {
     logger.warning("MAC indicated RA problem but either T300, T301, T304 or T311 is running. Ignoring it.");
@@ -723,7 +723,7 @@ void rrc::ra_problem()
 void rrc::max_retx_attempted()
 {
   // TODO: Handle the radio link failure
-  logger.warning("Max RLC reTx attempted. Starting RLF");
+  srsran::console("Max RLC reTx attempted. Starting RLF");
   radio_link_failure_push_cmd();
 }
 
@@ -735,7 +735,7 @@ void rrc::protocol_failure()
 void rrc::timer_expired(uint32_t timeout_id)
 {
   if (timeout_id == t310.id()) {
-    logger.info("Timer T310 expired: Radio Link Failure");
+    srsran::console("Timer T310 expired: Radio Link Failure");
     radio_link_failure_push_cmd();
   } else if (timeout_id == t311.id()) {
     srsran::console("Timer T311 expired: Going to RRC IDLE\n");

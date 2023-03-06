@@ -507,7 +507,7 @@ bool radio::tx_dev(const uint32_t& device_idx, rf_buffer_interface& buffer, cons
 
   // Calculates number of overlap samples with previous transmission
   int32_t past_nsamples = (int32_t)round(cur_tx_srate * srsran_timestamp_real(&ts_overlap));
-   past_nsamples=0;
+  past_nsamples=0;
   // if past_nsamples is positive, the current transmission overlaps with the previous transmission. If it is negative
   // there is a gap between the previous transmission and the current transmission.
   if (past_nsamples > 0) {
@@ -565,7 +565,7 @@ bool radio::tx_dev(const uint32_t& device_idx, rf_buffer_interface& buffer, cons
   // Save possible end of burst time
   srsran_timestamp_copy(&end_of_burst_time[device_idx], &tx_time);
    if (count==1)
-      tx_time.frac_secs= tx_time.frac_secs-.000001;
+      tx_time.frac_secs= tx_time.frac_secs-.0000001;
        else
       tx_time.frac_secs= tx_time.frac_secs;
 

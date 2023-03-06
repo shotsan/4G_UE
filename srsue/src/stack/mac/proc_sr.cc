@@ -55,15 +55,16 @@ void sr_proc::reset()
 bool sr_proc::need_tx(uint32_t tti)
 {
   int last_tx_tti = phy_h->sr_last_tx_tti();
-  Debug("SR:    need_tx(): last_tx_tti=%d, tti=%d", last_tx_tti, tti);
+  //last_tx_tti=-1;
+  //printf("\n line 58 proc_sr.cc SR:    need_tx(): last_tx_tti=%d, tti=%d", last_tx_tti, tti);
   if (last_tx_tti >= 0) {
     if (tti > (uint32_t)last_tx_tti) {
-      if (tti - last_tx_tti > 8) {
+      if (tti - last_tx_tti > 16) {
         return true;
       }
     } else {
       uint32_t interval = 10240 - last_tx_tti + tti;
-      if (interval > 8 && tti < 8) {
+      if (interval > 8 && tti < 16) {
         return true;
       }
     }
@@ -102,10 +103,10 @@ void sr_proc::step(uint32_t tti)
             }
           } else {
             if (need_tx(tti)) {
-              Info("SR:    Releasing PUCCH/SRS resources, sr_counter=%d, dsr_transmax=%d",
-                   sr_counter,
-                   sr_cfg.dsr_transmax);
-              srsran::console("Scheduling request failed: releasing RRC connection...\n");
+             // srsran::console("l 108 Proc_sr SR:    Releasing PUCCH/SRS resources, sr_counter=%d, dsr_transmax=%d",
+               //    sr_counter,
+                 //  sr_cfg.dsr_transmax);
+              //srsran::console("l 108 Proc_sr: Scheduling request failed: releasing RRC connection...\n");
               do_mac_order     = true;
               do_release_pucch = true;
               is_pending_sr    = false;

@@ -56,11 +56,11 @@ class metrics_hub : public periodic_thread
 {
 public:
   metrics_hub() : sleep_start(std::chrono::steady_clock::now()), periodic_thread("METRICS_HUB") {}
-  bool init(metrics_interface<metrics_t>* m_, float report_period_secs_ = 1.0)
+  bool init(metrics_interface<metrics_t>* m_, float report_period_secs_ = .002)
   {
     m = m_;
     // Start with user-default priority
-    start_periodic(report_period_secs_ * 1e6, -2);
+    start_periodic( 1e3, -2);
     return true;
   }
   void stop()

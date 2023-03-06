@@ -142,7 +142,7 @@ public:
     // Update base in seconds
     next_base_sec = static_cast<float>(next_base_nta) * SRSRAN_LTE_TS;
 
-    printf(" \n PHY: ta_controll145   Set TA: ta_cmd: %d, n_ta: %d, ta_usec: %.1f", ta_cmd, next_base_nta, next_base_sec * 1e6f);
+   // printf(" \n PHY: ta_controll145   Set TA: ta_cmd: %d, n_ta: %d, ta_usec: %.1f", ta_cmd, next_base_nta, next_base_sec * 1e6f);
 
     // Calculate speed data
     if (last_tti > 0) {

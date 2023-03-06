@@ -244,7 +244,7 @@ static int parse_args(all_args_t* args, int argc, char* argv[])
 
     /* PHY section */
     ("phy.worker_cpu_mask",
-     bpo::value<int>(&args->phy.worker_cpu_mask)->default_value(-1),
+     bpo::value<int>(&args->phy.worker_cpu_mask)->default_value(255),
      "cpu bit mask (eg 255 = 1111 1111)")
 
     ("phy.sync_cpu_affinity",
@@ -276,7 +276,7 @@ static int parse_args(all_args_t* args, int argc, char* argv[])
      "EMA coefficient to average sample offsets used to compute SFO")
 
     ("phy.snr_ema_coeff",
-     bpo::value<float>(&args->phy.snr_ema_coeff)->default_value(0.1),
+     bpo::value<float>(&args->phy.snr_ema_coeff)->default_value(.1),
      "Sets the SNR exponential moving average coefficient (Default 0.1)")
 
     ("phy.snr_estim_alg",
@@ -292,7 +292,7 @@ static int parse_args(all_args_t* args, int argc, char* argv[])
      "Measure PDSCH EVM, increases CPU load (default false)")
 
     ("phy.nof_phy_threads",
-     bpo::value<uint32_t>(&args->phy.nof_phy_threads)->default_value(3),
+     bpo::value<uint32_t>(&args->phy.nof_phy_threads)->default_value(4),
      "Number of PHY threads")
 
     ("phy.equalizer_mode",
@@ -308,7 +308,7 @@ static int parse_args(all_args_t* args, int argc, char* argv[])
        "Period of intra-frequency neighbour cell measurement in ms. Maximum as per 3GPP is 200 ms.")
 
     ("phy.correct_sync_error",
-       bpo::value<bool>(&args->phy.correct_sync_error)->default_value(false),
+       bpo::value<bool>(&args->phy.correct_sync_error)->default_value(true),
        "Channel estimator measures and pre-compensates time synchronization error. Increases CPU usage, improves PDSCH "
        "decoding in high SFO and high speed UE scenarios.")
 
@@ -438,11 +438,11 @@ static int parse_args(all_args_t* args, int argc, char* argv[])
       "Periodicity for metrics in seconds")
 
     ("general.metrics_csv_enable",
-       bpo::value<bool>(&args->general.metrics_csv_enable)->default_value(false),
+       bpo::value<bool>(&args->general.metrics_csv_enable)->default_value(true),
        "Write UE metrics to CSV file")
 
     ("general.metrics_csv_filename",
-       bpo::value<string>(&args->general.metrics_csv_filename)->default_value("/tmp/ue_metrics.csv"),
+       bpo::value<string>(&args->general.metrics_csv_filename)->default_value("/home/grads/s/sant1/Desktop/metrics.csv"),
        "Metrics CSV filename")
 
     ("general.metrics_csv_append",
@@ -450,7 +450,7 @@ static int parse_args(all_args_t* args, int argc, char* argv[])
            "Set to true to append new output to existing CSV file")
 
     ("general.metrics_csv_flush_period_sec",
-           bpo::value<int>(&args->general.metrics_csv_flush_period_sec)->default_value(-1),
+           bpo::value<int>(&args->general.metrics_csv_flush_period_sec)->default_value(5),
            "Periodicity in s to flush CSV file to disk (-1 for auto)")
 
     ("general.metrics_json_enable",
@@ -474,7 +474,7 @@ static int parse_args(all_args_t* args, int argc, char* argv[])
            "Tracing buffer capcity")
 
     ("stack.have_tti_time_stats",
-        bpo::value<bool>(&args->stack.have_tti_time_stats)->default_value(true),
+        bpo::value<bool>(&args->stack.have_tti_time_stats)->default_value(false),
         "Calculate TTI execution statistics")
 
     // NR params
@@ -722,7 +722,7 @@ int main(int argc, char* argv[])
   // Start the log backend.
   srslog::init();
 
-  srslog::fetch_basic_logger("ALL").set_level(srslog::basic_levels::warning);
+  srslog::fetch_basic_logger("ALL").set_level(srslog::basic_levels::none);
   srsran::log_args(argc, argv, "UE");
 
   srsran::check_scaling_governor(args.rf.device_name);

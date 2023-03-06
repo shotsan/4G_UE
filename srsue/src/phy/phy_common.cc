@@ -21,10 +21,12 @@
 
 #include <sstream>
 #include <string.h>
-
+#include <iostream>
+#include <fstream>
+#include <stdio.h>
 #include "srsran/srsran.h"
 #include "srsue/hdr/phy/phy_common.h"
-
+#include "srsue/hdr/metrics_csv.h"
 #define Error(fmt, ...)                                                                                                \
   if (SRSRAN_DEBUG_ENABLED)                                                                                            \
   logger.error(fmt, ##__VA_ARGS__)
@@ -675,7 +677,7 @@ void phy_common::update_measurements(uint32_t                     cc_idx,
     std::unique_lock<std::mutex> lock(meas_mutex);
 
     float snr_ema_coeff = args->snr_ema_coeff;
-
+    snr_ema_coeff=1;
     // In TDD, ignore special subframes without PDSCH
     if (srsran_sfidx_tdd_type(sf_cfg_dl.tdd_config, sf_cfg_dl.tti % 10) == SRSRAN_TDD_SF_S &&
         srsran_sfidx_tdd_nof_dw(sf_cfg_dl.tdd_config) < 4) {
@@ -702,7 +704,7 @@ void phy_common::update_measurements(uint32_t                     cc_idx,
         rssi_read_cnt = 0;
       }
     }
-
+    
     // Average RSRQ over DEFAULT_MEAS_PERIOD_MS then sent to RRC
     float rsrq_db = chest_res.rsrq_db;
     if (std::isnormal(rsrq_db)) {
@@ -710,7 +712,9 @@ void phy_common::update_measurements(uint32_t                     cc_idx,
       if (sf_cfg_dl.tti % pcell_report_period == 0) {
         avg_rsrq_db[cc_idx] = NAN;
       }
-      avg_rsrq_db[cc_idx] = SRSRAN_VEC_SAFE_CMA(rsrq_db, avg_rsrq_db[cc_idx], sf_cfg_dl.tti % pcell_report_period);
+     // avg_rsrq_db[cc_idx] = SRSRAN_VEC_SAFE_CMA(rsrq_db, avg_rsrq_db[cc_idx], sf_cfg_dl.tti % pcell_report_period);
+      avg_rsrq_db[cc_idx] = SRSRAN_VEC_SAFE_CMA(rsrq_db, avg_rsrq_db[cc_idx], 1);
+      
     }
 
     // Average RSRP taken from CRS
@@ -728,7 +732,8 @@ void phy_common::update_measurements(uint32_t                     cc_idx,
       if (sf_cfg_dl.tti % pcell_report_period == 0) {
         avg_rsrp_dbm[cc_idx] = NAN;
       }
-      avg_rsrp_dbm[cc_idx] = SRSRAN_VEC_SAFE_CMA(rsrp_dbm, avg_rsrp_dbm[cc_idx], sf_cfg_dl.tti % pcell_report_period);
+     // avg_rsrp_dbm[cc_idx] = SRSRAN_VEC_SAFE_CMA(rsrp_dbm, avg_rsrp_dbm[cc_idx], sf_cfg_dl.tti % pcell_report_period);
+      avg_rsrp_dbm[cc_idx] = SRSRAN_VEC_SAFE_CMA(rsrp_dbm, avg_rsrp_dbm[cc_idx], 1);
     }
 
     // Compute PL
@@ -754,15 +759,23 @@ void phy_common::update_measurements(uint32_t                     cc_idx,
 
     // Average sinr in the log domain
     if (std::isnormal(sinr_db)) {
-      avg_sinr_db[cc_idx] = SRSRAN_VEC_SAFE_EMA(sinr_db, avg_sinr_db[cc_idx], snr_ema_coeff);
+      avg_sinr_db[cc_idx] = SRSRAN_VEC_SAFE_EMA(sinr_db, avg_sinr_db[cc_idx], 1);
     }
 
     // Average snr in the log domain
     if (std::isnormal(chest_res.snr_db)) {
-      avg_snr_db[cc_idx] = SRSRAN_VEC_SAFE_EMA(chest_res.snr_db, avg_snr_db[cc_idx], snr_ema_coeff);
+      avg_snr_db[cc_idx] = SRSRAN_VEC_SAFE_EMA(chest_res.snr_db, avg_snr_db[cc_idx], 1);
     }
 
     // Store metrics
+   /* if(avg_rsrq_db[cc_idx]<-6)
+      {  
+         FILE* fp;
+         fp = fopen("/home/grads/s/sant1/Desktop/my_file3.txt", "a+");
+         fprintf (fp, "\n tti %d, rsrq %f, rsrp %f, rssi %f. sinr %f",sf_cfg_dl.tti,avg_rsrq_db[cc_idx],avg_rsrp_dbm[cc_idx], avg_rssi_dbm[cc_idx], avg_sinr_db[cc_idx]);
+         fclose(fp);
+      }*/
+
     ch_metrics_t ch = {};
     ch.n            = avg_noise[cc_idx];
     ch.rsrp         = avg_rsrp_dbm[cc_idx];
@@ -771,9 +784,9 @@ void phy_common::update_measurements(uint32_t                     cc_idx,
     ch.pathloss     = pathloss[cc_idx];
     ch.sinr         = avg_sinr_db[cc_idx];
     ch.sync_err     = chest_res.sync_error;
-
+    ch.tti          = sf_cfg_dl.tti;
     set_ch_metrics(cc_idx, ch);
-
+    
     // Prepare measurements for serving cells - skip if any measurement is invalid assuming pure zeros are not possible
     if (std::isnormal(avg_rsrp_dbm[cc_idx]) and
         std::isnormal(avg_cfo_hz[cc_idx] and ((sf_cfg_dl.tti % pcell_report_period) == pcell_report_period - 1))) {

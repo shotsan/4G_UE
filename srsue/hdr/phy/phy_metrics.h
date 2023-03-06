@@ -83,7 +83,7 @@ struct ch_metrics_t {
   float ri;
   float pathloss;
   float sync_err;
-
+  uint32_t tti;
   void set(const ch_metrics_t& other)
   {
     count++;
@@ -98,6 +98,7 @@ struct ch_metrics_t {
     PHY_METRICS_SET(ri);
     PHY_METRICS_SET(pathloss);
     PHY_METRICS_SET(sync_err);
+    PHY_METRICS_SET(tti);
   }
 
   void reset()
@@ -111,6 +112,7 @@ struct ch_metrics_t {
     ri       = 0.0;
     pathloss = 0.0;
     sync_err = 0.0;
+    tti=0;
   }
 
 private:

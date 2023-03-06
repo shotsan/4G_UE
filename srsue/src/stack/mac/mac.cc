@@ -204,7 +204,7 @@ void mac::run_tti(const uint32_t tti)
   /* Warning: Here order of invocation of procedures is important!! */
 
   // Step all procedures (must follow this order)
-  Debug("Running MAC tti=%d", tti);
+  
   mux_unit.step();
   bsr_procedure.step(tti);
   sr_procedure.step(tti);

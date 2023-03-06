@@ -159,8 +159,9 @@ void ra_proc::state_pdcch_setup()
     ra_tti  = info.tti_ra;
     ra_rnti = 1 + (ra_tti % 10) + (10 * info.f_id);
     rInfo("seq=%d, ra-rnti=0x%x, ra-tti=%d, f_id=%d", sel_preamble.load(), ra_rnti, info.tti_ra, info.f_id);
-    srsran::console(
-        "Random Access Transmission: seq=%d, tti=%d, ra-rnti=0x%x\n", sel_preamble.load(), info.tti_ra, ra_rnti);
+    
+    /*srsran::console(
+        "Random Access Transmission: seq=%d, tti=%d, ra-rnti=0x%x\n", sel_preamble.load(), info.tti_ra, ra_rnti);*/
     rar_window_st = ra_tti + 3;
     rntis->set_rar_rnti(ra_rnti);
     state = RESPONSE_RECEPTION;
@@ -178,7 +179,7 @@ void ra_proc::state_response_reception(uint32_t tti)
   if (!rar_received) {
     uint32_t interval = srsran_tti_interval(tti, ra_tti + 3 + rach_cfg.responseWindowSize - 1);
     if (interval > 0 && interval < 100) {
-      logger.warning("RA response not received within the response window");
+    //  srsran::console("\n l182: proc_ra.cc RA response not received within the response window");
       response_error();
     }
   }

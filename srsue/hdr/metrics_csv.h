@@ -58,6 +58,10 @@ private:
                           const rrc_metrics_t&         rrc,
                           const uint32_t               cc,
                           const uint32_t               r);
+  void set_metrics_helper_new(
+                                     const phy_metrics_t&         phy,
+                                    
+                                     const uint32_t               r);
 
   std::string float_to_string(float f, int digits, bool add_semicolon = true);
 

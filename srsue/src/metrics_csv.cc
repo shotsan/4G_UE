@@ -91,17 +91,23 @@ void metrics_csv::set_metrics_helper(const srsran::rf_metrics_t&  rf,
   file << time_ms << ";";
 
   // CC and PCI
+
+  /*
   file << cc << ";";
   file << phy.info[r].dl_earfcn << ";";
-  file << phy.info[r].pci << ";";
+  file << phy.info[r].pci << ";";*/
 
   // Print PHY metrics for first CC
+  file << float_to_string(phy.ch[r].tti, 2);
   file << float_to_string(phy.ch[r].rsrp, 2);
   file << float_to_string(phy.ch[r].pathloss, 2);
-  file << float_to_string(phy.sync[r].cfo, 2);
+  file << float_to_string(phy.ch[r].rsrq, 2);
+  file << float_to_string(phy.ch[r].rssi, 2);
+  // file << float_to_string(phy.sync[r].cfo, 2);
 
   // Find strongest neighbour for this EARFCN (cells are ordered)
   bool has_neighbour = false;
+  /*
   for (auto& c : rrc.neighbour_cells) {
     if (c.earfcn == phy.info[r].dl_earfcn && c.pci != phy.info[r].pci) {
       file << c.pci << ";";
@@ -110,16 +116,17 @@ void metrics_csv::set_metrics_helper(const srsran::rf_metrics_t&  rf,
       has_neighbour = true;
       break;
     }
-  }
-  if (!has_neighbour) {
+  }*/
+  
+  /*if (!has_neighbour) {
     file << "n/a;";
     file << "n/a;";
     file << "n/a;";
-  }
+  }*/
 
-  file << float_to_string(phy.dl[r].mcs, 2);
+  // file << float_to_string(phy.dl[r].mcs, 2);
   file << float_to_string(phy.ch[r].sinr, 2);
-  file << float_to_string(phy.dl[r].fec_iters, 2);
+  // file << float_to_string(phy.dl[r].fec_iters, 2);
 
   if (mac[r].rx_brate > 0) {
     file << float_to_string(mac[r].rx_brate / (mac[r].nof_tti * 1e-3), 2);
@@ -136,10 +143,10 @@ void metrics_csv::set_metrics_helper(const srsran::rf_metrics_t&  rf,
   }
 
   file << float_to_string(phy.sync[r].ta_us, 2);
-  file << float_to_string(phy.sync[r].distance_km, 2);
-  file << float_to_string(phy.sync[r].speed_kmph, 2);
-  file << float_to_string(phy.ul[r].mcs, 2);
-  file << float_to_string((float)mac[r].ul_buffer, 2);
+  // file << float_to_string(phy.sync[r].distance_km, 2);
+  // file << float_to_string(phy.sync[r].speed_kmph, 2);
+  // file << float_to_string(phy.ul[r].mcs, 2);
+  // file << float_to_string((float)mac[r].ul_buffer, 2);
 
   if (mac[r].tx_brate > 0) {
     file << float_to_string(mac[r].tx_brate / (mac[r].nof_tti * 1e-3), 2);
@@ -156,24 +163,25 @@ void metrics_csv::set_metrics_helper(const srsran::rf_metrics_t&  rf,
     file << float_to_string(0, 2);
   }
 
-  file << float_to_string(rf.rf_o, 2);
-  file << float_to_string(rf.rf_u, 2);
-  file << float_to_string(rf.rf_l, 2);
-  file << (rrc.state == RRC_STATE_CONNECTED ? "1.0" : "0.0") << ";";
+ // file << float_to_string(rf.rf_o, 2);
+ // file << float_to_string(rf.rf_u, 2);
+ // file << float_to_string(rf.rf_l, 2);
+ //  file << (rrc.state == RRC_STATE_CONNECTED ? "1.0" : "0.0") << ";";
 
   // Write system metrics.
-  const srsran::sys_metrics_t& m = sys;
-  file << float_to_string(m.process_realmem, 2);
-  file << std::to_string(m.process_realmem_kB) << ";";
-  file << std::to_string(m.process_virtualmem_kB) << ";";
-  file << float_to_string(m.system_mem, 2);
-  file << float_to_string(m.process_cpu_usage, 2);
-  file << std::to_string(m.thread_count) << ";";
+ // const srsran::sys_metrics_t& m = sys;
+ // file << float_to_string(m.process_realmem, 2);
+ // file << std::to_string(m.process_realmem_kB) << ";";
+  // file << std::to_string(m.process_virtualmem_kB) << ";";
+  // file << float_to_string(m.system_mem, 2);
+  // file << float_to_string(m.process_cpu_usage, 2);
+  // file << std::to_string(m.thread_count) << ";";
 
   // Write the cpu metrics.
+  /*
   for (uint32_t i = 0, e = m.cpu_count, last_cpu_index = e - 1; i != e; ++i) {
     file << float_to_string(m.cpu_load[i], 2, (i != last_cpu_index));
-  }
+  }*/
 
   file << "\n";
 }
@@ -186,17 +194,16 @@ void metrics_csv::set_metrics(const ue_metrics_t& metrics, const uint32_t period
 
   if (file.is_open() && ue != NULL) {
     if (n_reports == 0 && !file_exists) {
-      file << "time;cc;earfcn;pci;rsrp;pl;cfo;pci_neigh;rsrp_neigh;cfo_neigh;dl_mcs;dl_snr;dl_turbo;dl_brate;dl_bler;"
-              "ul_ta;distance_km;speed_kmph;ul_mcs;ul_buff;ul_brate;ul_"
-              "bler;"
-              "rf_o;rf_"
-              "u;rf_l;is_attached;"
-              "proc_rmem;proc_rmem_kB;proc_vmem_kB;sys_mem;sys_load;thread_count";
+      file << "time;tti;rsrp;pathloss;rsrq;rssi;dl_snr;dl_brate;dl_bler;"
+              "ul_ta;ul_brate;ul_"
+              "bler;";
+             // "proc_rmem;proc_rmem_kB;proc_vmem_kB;sys_mem;sys_load;thread_count";
 
       // Add the cores.
+      /*
       for (uint32_t i = 0, e = metrics.sys.cpu_count; i != e; ++i) {
         file << ";cpu_" << std::to_string(i);
-      }
+      }*/
 
       // Add the new line.
       file << "\n";
@@ -208,6 +215,7 @@ void metrics_csv::set_metrics(const ue_metrics_t& metrics, const uint32_t period
     }
 
     // Metrics for NR carrier
+    /*
     for (uint32_t r = 0; r < metrics.phy_nr.nof_active_cc; r++) {
       set_metrics_helper(metrics.rf,
                          metrics.sys,
@@ -216,7 +224,7 @@ void metrics_csv::set_metrics(const ue_metrics_t& metrics, const uint32_t period
                          metrics.stack.rrc,
                          metrics.phy.nof_active_cc + r, // NR carrier offset
                          r);
-    }
+    }*/
 
     n_reports++;
 
@@ -241,5 +249,134 @@ std::string metrics_csv::float_to_string(float f, int digits, bool add_semicolon
     os << ';';
   return os.str();
 }
+
+
+
+
+void metrics_csv::set_metrics_helper_new(
+                                     const phy_metrics_t&         phy,
+                                    
+                                     const uint32_t               r)
+{
+  if (not file.is_open()) {
+    return;
+  }
+
+  file << time_ms << ";";
+
+  // CC and PCI
+
+  /*
+  file << cc << ";";
+  file << phy.info[r].dl_earfcn << ";";
+  file << phy.info[r].pci << ";";*/
+
+  // Print PHY metrics for first CC
+  file << float_to_string(phy.ch[r].tti, 2);
+  file << float_to_string(phy.ch[r].rsrp, 2);
+  file << float_to_string(phy.ch[r].pathloss, 2);
+  file << float_to_string(phy.ch[r].rsrq, 2);
+  file << float_to_string(phy.ch[r].rssi, 2);
+  // file << float_to_string(phy.sync[r].cfo, 2);
+
+  // Find strongest neighbour for this EARFCN (cells are ordered)
+  bool has_neighbour = false;
+  /*
+  for (auto& c : rrc.neighbour_cells) {
+    if (c.earfcn == phy.info[r].dl_earfcn && c.pci != phy.info[r].pci) {
+      file << c.pci << ";";
+      file << float_to_string(c.rsrp, 2);
+      file << float_to_string(c.cfo_hz, 2);
+      has_neighbour = true;
+      break;
+    }
+  }*/
+  
+  /*if (!has_neighbour) {
+    file << "n/a;";
+    file << "n/a;";
+    file << "n/a;";
+  }*/
+
+  // file << float_to_string(phy.dl[r].mcs, 2);
+  file << float_to_string(phy.ch[r].sinr, 2);
+  // file << float_to_string(phy.dl[r].fec_iters, 2);
+
+
+
+ 
+
+  file << float_to_string(phy.sync[r].ta_us, 2);
+
+
+  file << "\n";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 } // namespace srsue

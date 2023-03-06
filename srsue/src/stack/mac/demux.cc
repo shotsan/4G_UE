@@ -305,7 +305,7 @@ bool demux::process_ce(srsran::sch_subh* subh, uint32_t tti)
 void demux::parse_ta_cmd(srsran::sch_subh* subh, uint32_t tti)
 {
   phy_h->set_timeadv(tti, subh->get_ta_cmd());
-  printf(" \n demux l308 Received TA=%d (%d/%d) ",
+  logger.info(" \n demux l308 Received TA=%d (%d/%d) ",
        subh->get_ta_cmd(),
        time_alignment_timer->time_elapsed(),
        time_alignment_timer->duration());

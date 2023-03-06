@@ -31,7 +31,7 @@ if (RPATH)
   set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
 endif (RPATH)
 
-add_executable(srsue main.cc ue.cc metrics_stdout.cc metrics_csv.cc metrics_json.cc)
+add_executable(srsueMIM main.cc ue.cc metrics_stdout.cc metrics_csv.cc metrics_json.cc)
 
 set(SRSUE_SOURCES srsue_phy srsue_stack srsue_upper srsue_mac srsue_rrc srslog system)
 set(SRSRAN_SOURCES srsran_common srsran_mac srsran_phy srsran_radio srsran_gtpu srsran_rlc srsran_pdcp rrc_asn1 srslog support system)
@@ -39,7 +39,7 @@ set(SRSRAN_SOURCES srsran_common srsran_mac srsran_phy srsran_radio srsran_gtpu 
 set(SRSUE_SOURCES ${SRSUE_SOURCES} srsue_nr_stack srsue_rrc_nr srsue_mac_nr)
 set(SRSRAN_SOURCES ${SRSRAN_SOURCES} rrc_nr_asn1 ngap_nr_asn1)
 
-target_link_libraries(srsue   ${SRSUE_SOURCES}
+target_link_libraries(srsueMIM   ${SRSUE_SOURCES}
                               ${SRSRAN_SOURCES}
                               ${CMAKE_THREAD_LIBS_INIT}
                               ${Boost_LIBRARIES}
@@ -76,4 +76,4 @@ else(NOT ${BUILDUE_CMD} STREQUAL "")
   message(STATUS "No post-build-UE command defined")
 endif (NOT ${BUILDUE_CMD} STREQUAL "")
 
-install(TARGETS srsue DESTINATION ${RUNTIME_DIR})
+install(TARGETS srsueMIM DESTINATION ${RUNTIME_DIR})

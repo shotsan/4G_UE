@@ -1,0 +1,42 @@
+[2022-03-09 20:29:46.382] [main] [info] window#load: attempt to load window (id: 1)
+[2022-03-09 20:29:46.388] [main] [info] update#setState idle
+[2022-03-09 20:29:46.401] [main] [info] ExtensionHostStarterWorker created
+[2022-03-09 20:29:47.335] [main] [info] window#load: window reported ready (id: 1)
+[2022-03-09 20:29:47.617] [main] [info] Starting extension host with pid 1217 (fork() took 8 ms).
+[2022-03-09 20:29:47.617] [main] [info] ExtensionHostStarterWorker.start() took 9 ms.
+[2022-03-09 20:30:16.388] [main] [info] update#setState checking for updates
+[2022-03-09 20:30:16.455] [main] [info] update#setState idle
+[2022-03-09 21:30:16.417] [main] [info] update#setState checking for updates
+[2022-03-09 21:30:16.655] [main] [info] update#setState idle
+[2022-03-09 22:30:16.483] [main] [info] update#setState checking for updates
+[2022-03-09 22:30:16.721] [main] [info] update#setState idle
+[2022-03-09 23:30:16.542] [main] [info] update#setState checking for updates
+[2022-03-09 23:30:16.779] [main] [info] update#setState idle
+[2022-03-10 00:30:16.638] [main] [info] update#setState checking for updates
+[2022-03-10 00:30:16.877] [main] [info] update#setState idle
+[2022-03-10 01:30:16.664] [main] [info] update#setState checking for updates
+[2022-03-10 01:30:16.900] [main] [info] update#setState idle
+[2022-03-10 02:30:16.679] [main] [info] update#setState checking for updates
+[2022-03-10 02:30:16.920] [main] [info] update#setState idle
+[2022-03-10 03:30:16.707] [main] [info] update#setState checking for updates
+[2022-03-10 03:30:16.950] [main] [info] update#setState idle
+[2022-03-10 04:30:16.746] [main] [info] update#setState checking for updates
+[2022-03-10 04:30:16.984] [main] [info] update#setState idle
+[2022-03-10 05:30:16.767] [main] [info] update#setState checking for updates
+[2022-03-10 05:30:17.005] [main] [info] update#setState idle
+[2022-03-10 06:30:16.779] [main] [info] update#setState checking for updates
+[2022-03-10 06:30:17.016] [main] [info] update#setState idle
+[2022-03-10 07:30:16.866] [main] [info] update#setState checking for updates
+[2022-03-10 07:30:17.102] [main] [info] update#setState idle
+[2022-03-10 08:30:16.873] [main] [info] update#setState checking for updates
+[2022-03-10 08:30:17.122] [main] [info] update#setState idle
+[2022-03-10 09:30:16.879] [main] [info] update#setState checking for updates
+[2022-03-10 09:30:17.119] [main] [info] update#setState idle
+[2022-03-10 10:30:16.936] [main] [info] update#setState checking for updates
+[2022-03-10 10:30:17.180] [main] [info] update#setState idle
+[2022-03-10 11:30:16.949] [main] [info] update#setState checking for updates
+[2022-03-10 11:30:17.184] [main] [info] update#setState idle
+[2022-03-10 12:30:17.050] [main] [info] update#setState checking for updates
+[2022-03-10 12:30:17.287] [main] [info] update#setState idle
+[2022-03-10 13:30:17.051] [main] [info] update#setState checking for updates
+[2022-03-10 13:30:17.290] [main] [info] update#setState available for download

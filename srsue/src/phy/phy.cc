@@ -227,13 +227,13 @@ void phy::get_metrics(const srsran::srsran_rat_t& rat, phy_metrics_t* m)
 
 void phy::set_timeadv_rar(uint32_t tti, uint32_t ta_cmd)
 {
-  printf("\n phyl230 rar ta %u",ta_cmd);
+  //printf("\n phyl230 rar ta %u",ta_cmd);
   common.ta.add_ta_cmd_rar(tti, ta_cmd);
 }
 
 void phy::set_timeadv(uint32_t tti, uint32_t ta_cmd)
 {
-  printf("\n phyl236 ta %u",ta_cmd);
+  //printf("\n phyl236 ta %u",ta_cmd);
   common.ta.add_ta_cmd_new(tti, ta_cmd);
 }
 

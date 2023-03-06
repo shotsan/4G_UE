@@ -1,0 +1,16 @@
+[variant] Loaded new set of variants
+[kit] Successfully loaded 1 kits from /root/.local/share/CMakeTools/cmake-tools-kits.json
+[kit] Detected kits definition version change from undefined to 2. Silently scanning for kits.
+[proc] Executing command: /usr/bin/c89-gcc -v
+[proc] Executing command: /usr/bin/c99-gcc -v
+[proc] Executing command: /usr/bin/gcc -v
+[proc] Executing command: /usr/bin/gcc-7 -v
+[proc] Executing command: /usr/bin/x86_64-linux-gnu-gcc -v
+[proc] Executing command: /usr/bin/x86_64-linux-gnu-gcc-7 -v
+[kit] Found Kit: GCC 7.5.0 x86_64-linux-gnu
+[kit] Found Kit: GCC 7.5.0 x86_64-linux-gnu
+[kit] Found Kit: GCC 7.5.0 x86_64-linux-gnu
+[kit] Found Kit: GCC 7.5.0 x86_64-linux-gnu
+[kit] Found Kit: GCC 7.5.0 x86_64-linux-gnu
+[kit] Found Kit: GCC 7.5.0 x86_64-linux-gnu
+[kit] Successfully loaded 1 kits from /root/.local/share/CMakeTools/cmake-tools-kits.json
