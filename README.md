@@ -35,6 +35,11 @@ srsueMIM <path to config file>
 
 ```
 
+### Data Traffic
+use iperf to send the data traffic. 
+
+If you encounter any issues like no route to host, do `iptables -F`
+
 ### SRS RAN PROJECT DETAILS
 
 srsRAN
