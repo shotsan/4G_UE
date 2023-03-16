@@ -1,8 +1,8 @@
 
-Man in the Detection research paper uses a 4G network. This repo is fork from [srsRAN project](https://www.srsran.com).
-Without any modifications to the source code, except to configure the frequency of operation, we use the project as is.
+Man in the Detection research paper uses 4G network to showcase the results. This repo is forked from [srsRAN project](https://www.srsran.com).
+No modifications are made to the source code, except to configure the frequency of operation, and some debug prints, we use the project as is.
 
-UE configuration file with modications is in the [repo](https://github.com/shotsan/4G_eNodeB_EPC/blob/3956297891cd4739f450ac30dc2ac81006304ccf/enb.conf)
+User Equipment or UE configuration file with necessary modications is in the [repo](https://github.com/shotsan/4G_eNodeB_EPC/blob/3956297891cd4739f450ac30dc2ac81006304ccf/enb.conf)
 
 
 
